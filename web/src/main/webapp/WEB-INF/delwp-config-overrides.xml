@@ -1,0 +1,5 @@
+<overrides>
+	<!-- add delwp description to the strings file -->
+	<file name=".*geonetwork/loc/eng/xml/strings\.xml">
+  </file>
+</overrides>
