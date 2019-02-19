@@ -251,6 +251,7 @@ public class MetadataSchema {
      */
 
     public boolean isSimpleElement(String elem, String parent) throws Exception {
+        if (elem.equals("gco:Record")) return false;
         String type = getElementType(elem, parent);
         return type != null && !hmTypes.containsKey(type);
     }

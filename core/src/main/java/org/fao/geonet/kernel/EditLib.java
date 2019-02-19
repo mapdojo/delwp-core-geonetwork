@@ -279,7 +279,7 @@ public class EditLib {
 
         SchemaSuggestions mdSugg = scm.getSchemaSuggestions(mdSchema.getName());
 
-        String typeName = mdSchema.getElementType(el.getQualifiedName(), parentName);
+        String typeName = getElementType(mdSchema, el, parentName);
 
         if (Log.isDebugEnabled(Geonet.EDITORADDELEMENT))
             Log.debug(Geonet.EDITORADDELEMENT, "#### - type name = " + typeName);
@@ -348,7 +348,7 @@ public class EditLib {
             throw new IllegalStateException("EditLib : Error when loading XML fragment, " + e.getMessage());
         }
 
-        String typeName = mdSchema.getElementType(el.getQualifiedName(), parentName);
+        String typeName = getElementType(mdSchema, el, parentName);
         MetadataType type = mdSchema.getTypeInfo(typeName);
 
         // --- collect all children, adding the new one at the end of the others
@@ -1093,7 +1093,7 @@ public class EditLib {
             return;
         }
 
-        MetadataType type = schema.getTypeInfo(schema.getElementType(elemName, parentName));
+        MetadataType type = schema.getTypeInfo(getElementType(schema, element, parentName));
         boolean hasSuggestion = sugg.hasSuggestion(elemName, type.getElementList());
 //        List<String> elementSuggestion = sugg.getSuggestedElements(elemName);
 //        boolean hasSuggestion = elementSuggestion.size() != 0;
@@ -1315,7 +1315,7 @@ public class EditLib {
         String name = md.getQualifiedName();
         String parentName = getParentNameFromChild(md);
         MetadataSchema mdSchema = scm.getSchema(schema);
-        String typeName = mdSchema.getElementType(name, parentName);
+        String typeName = getElementType(mdSchema, md, parentName);
         MetadataType thisType = mdSchema.getTypeInfo(typeName);
 
         if (thisType.hasContainers) {
@@ -1492,7 +1492,7 @@ public class EditLib {
             Log.debug(Geonet.EDITOREXPANDELEMENT, "parentName = " + parentName);
         }
 
-        String elemType = schema.getElementType(elemName, parentName);
+        String elemType = getElementType(schema, md, parentName);
         if (Log.isDebugEnabled(Geonet.EDITOREXPANDELEMENT))
             Log.debug(Geonet.EDITOREXPANDELEMENT, "elemType = " + elemType);
 
@@ -1786,7 +1786,7 @@ public class EditLib {
         String elemName = elem.getQualifiedName();
         String parentName = getParentNameFromChild(elem);
 
-        String elemType = mds.getElementType(elemName, parentName);
+        String elemType = getElementType(mds, elem, parentName);
         return mds.getTypeInfo(elemType);
     }
 
@@ -2072,6 +2072,15 @@ public class EditLib {
 
         private static SelectResult of(List<Object> results) {
             return new SelectResult(results, false);
+        }
+    }
+
+    private String getElementType(MetadataSchema mdSchema, Element md, String parent) throws Exception {
+        String xsiTypeAttribute = md.getAttributeValue("type", Geonet.Namespaces.XSI);
+        if (xsiTypeAttribute != null) {
+          return xsiTypeAttribute;
+        } else {
+          return mdSchema.getElementType(md.getQualifiedName(), parent);
         }
     }
 
