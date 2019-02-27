@@ -35,7 +35,7 @@
 
   <xsl:output method="xml" indent="yes" name="xml"/>
 
-  <xsl:variable name="organisations" select="document('RASTERAPP.DATA_ORGANISATIONS.xml')"/>
+  <xsl:variable name="organisations" select="document('../RASTERAPP.DATA_ORGANISATIONS.xml')"/>
 
   <xsl:template match="/">
 
