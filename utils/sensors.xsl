@@ -54,23 +54,26 @@
     <xsl:variable name="filename" select="concat('sensors/',$sensorid,'.xml')" />
     <xsl:result-document href="{$filename}" format="xml">
         <mac:MI_Sensor id="{$sensorid}" uuid="urn:delwp-sensors:{$sensorid}">
+            <mac:citation>
+              <cit:CI_Citation> 
+                <cit:title>
+                  <gco:CharacterString><xsl:value-of select="$sensorname"/></gco:CharacterString>
+                </cit:title>
+              </cit:CI_Citation> 
+            </mac:citation>
             <mac:identifier>
               <mcc:MD_Identifier>
                 <mcc:code>
-                  <gco:CharacterString><xsl:value-of select="$sensorname"/></gco:CharacterString>
+                  <gco:CharacterString><xsl:value-of select="$platform"/></gco:CharacterString>
                 </mcc:code>
+                <mcc:codeSpace>
+                  <gco:CharacterString>delwp-platformName</gco:CharacterString>
+                </mcc:codeSpace>
               </mcc:MD_Identifier>
             </mac:identifier>
             <mac:type>
                <gco:CharacterString><xsl:value-of select="$sensortype"/></gco:CharacterString>
             </mac:type>
-            <mac:otherProperty>
-              <gco:Record xsi:type="delwp:MD_SensorProperties_Type">
-                <delwp:platformType>
-                  <delwp:MD_PlatformTypeCode codeList="codeListLocation#MD_PlatformTypeCode" codeListValue="{$platform}"/>
-                </delwp:platformType>
-              </gco:Record>
-            </mac:otherProperty>
         </mac:MI_Sensor>
     </xsl:result-document>
 
