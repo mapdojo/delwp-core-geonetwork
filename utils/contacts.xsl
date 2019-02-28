@@ -35,7 +35,7 @@
 
   <xsl:output method="xml" indent="yes" name="xml"/>
 
-  <xsl:variable name="organisations" select="document('../RASTERAPP.DATA_ORGANISATIONS.xml')"/>
+  <xsl:variable name="organisations" select="document('dump/RASTERAPP.DATA_ORGANISATIONS.xml')"/>
 
   <xsl:template match="/">
 
@@ -65,7 +65,7 @@
 
     <xsl:result-document href="{$filename}" format="xml">
 
-    <cit:CI_Organisation uuid="urn:delwp-contacts:{$contactid}" title="{$title}">
+    <cit:CI_Organisation uuid="urn:delwp-contacts:{$contactid}">
       <cit:name> 
         <gco:CharacterString><xsl:value-of select="$org/NAME"/></gco:CharacterString>
       </cit:name> 
@@ -92,6 +92,18 @@
           </cit:address>
         </cit:CI_Contact>
       </cit:contactInfo>
+      <xsl:if test="normalize-space($org/STAKEHOLDERTYPE)!=''">
+      <cit:partyIdentifier>
+        <mcc:MD_Identifier>
+          <mcc:code>
+            <gco:CharacterString><xsl:value-of select="$org/STAKEHOLDERTYPE"/></gco:CharacterString>
+          </mcc:code>
+          <mcc:codeSpace>
+            <gco:CharacterString>delwp-stakeholderType</gco:CharacterString>
+          </mcc:codeSpace>
+        </mcc:MD_Identifier>
+      </cit:partyIdentifier>
+      </xsl:if>
       <cit:individual>
         <cit:CI_Individual>
           <cit:name> 

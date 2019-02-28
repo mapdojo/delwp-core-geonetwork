@@ -34,9 +34,9 @@
 
   <xsl:output method="xml" indent="yes" name="xml"/>
 
-  <xsl:variable name="platforms" select="document('../RASTERAPP.RT_PLATFORM.xml')"/>
-  <xsl:variable name="sensornames" select="document('../RASTERAPP.RT_SENSORNAME.xml')"/>
-  <xsl:variable name="sensortypes" select="document('../RASTERAPP.RT_SENSORTYPE.xml')"/>
+  <xsl:variable name="platforms" select="document('dump/RASTERAPP.RT_PLATFORM.xml')"/>
+  <xsl:variable name="sensornames" select="document('dump/RASTERAPP.RT_SENSORNAME.xml')"/>
+  <xsl:variable name="sensortypes" select="document('dump/RASTERAPP.RT_SENSORTYPE.xml')"/>
 
   <xsl:template match="DATA_RECORD">
     <xsl:variable name="sensorid" select="SENSORID"/>
@@ -53,8 +53,7 @@
 
     <xsl:variable name="filename" select="concat('sensors/',$sensorid,'.xml')" />
     <xsl:result-document href="{$filename}" format="xml">
-        <mac:MI_Sensor id="{$sensorid}" uuid="urn:delwp-sensors:{$sensorid}"
-                       title="{concat($platform,': ',$sensorname)}">
+        <mac:MI_Sensor id="{$sensorid}" uuid="urn:delwp-sensors:{$sensorid}">
             <mac:identifier>
               <mcc:MD_Identifier>
                 <mcc:code>
