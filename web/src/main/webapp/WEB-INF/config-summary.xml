@@ -110,7 +110,9 @@
     <facet name="publishedForGroup" indexKey="_groupPublished" label="publishedForGroup"/>
 	  <facet name="isPublishedToAll" indexKey="_isPublishedToAll" label="isPublishedToAll" />
 	  <facet name="rasterType" indexKey="rasterType" label="rasterType" />
+	  <facet name="sensorType" indexKey="sensorType" label="sensorType" />
 	  <facet name="platformType" indexKey="platformType" label="platformType" />
+	  <facet name="stakeholderType" indexKey="stakeholderType" label="stakeholderType" />
 	  <facet name="spatialRepresentationType" indexKey="spatialRepresentationType" label="spatialRepresentationType" />
     <!--
     Example configuration for hierarchical facet based on
@@ -145,6 +147,7 @@
       <item facet="platformType" max="40" translator="codelist:delwp:MD_PlatformTypeCode"/>
       <item facet="spatialRepresentationType"
             translator="codelist:mcc:MD_SpatialRepresentationTypeCode"/>
+      <item facet="sensorType" max="40"/>
     </summaryType>
 
     <summaryType name="details" format="DIMENSION">
@@ -223,10 +226,14 @@
       <!--<item facet="metadataPOC" max="15"/>-->
     </summaryType>
     <summaryType name="subtemplates">
+      <item facet="platformType" max="40" translator="codelist:delwp:MD_PlatformTypeCode"/>
+      <item facet="sensorType" max="40"/>
+      <!--
       <item facet="subTemplateType"/>
       <item facet="groupOwner" max="99" sortBy="value"
             translator="db:org.fao.geonet.repository.GroupRepository:findOne:int"/>
       <item facet="isValid" max="3" sortBy="value" translator="apploc:validStatus-"/>
+      -->
     </summaryType>
     <summaryType name="contact" format="DIMENSION">
       <item facet="orgNameTree" max="99"/>
@@ -245,6 +252,7 @@
       <item facet="platformType" max="40" translator="codelist:delwp:MD_PlatformTypeCode"/>
       <item facet="spatialRepresentationType"
             translator="codelist:mcc:MD_SpatialRepresentationTypeCode"/>
+      <item facet="sensorType" max="40"/>
       <item facet="keyword" max="15"/>
       <!--
       <item facet="inspireTheme" sortBy="value" sortOrder="asc" max="35"/>
