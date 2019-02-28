@@ -223,7 +223,7 @@
                   //  return defaultTab;
                   //}
                   'iso19139.mcp': function(md) { return 'resourceCitation'; },
-                  'iso19139.mcp-2.0': function(md) { return 'resourceCitation'; }
+                  'iso19139.mcp-2.0': function(md) { return 'resourceCitation'; },
                   'iso19115-3': function(md) { return 'description'; }
                 };
                 if (schemaCustomConfig) {

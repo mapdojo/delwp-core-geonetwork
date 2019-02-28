@@ -400,5 +400,7 @@
     "resolutions": "Resolution",
     "loginTitle": "Sign in",
     "loginText": "Sign in with your username and password to add and edit metadata.",
-    "confirmCreateDraft": "This is an APPROVED record. Editing it will create a Draft/Working copy which must be submitted and reviewed. Press OK to create and edit draft or CANCEL."
+    "confirmCreateDraft": "This is an APPROVED record. Editing it will create a Draft/Working copy which must be submitted and reviewed. Press OK to create and edit draft or CANCEL.",
+    "rasterType": "Raster Dataset Type",
+    "platformType": "Platform Type"
 }

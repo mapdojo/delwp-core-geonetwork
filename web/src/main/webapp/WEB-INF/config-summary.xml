@@ -109,6 +109,9 @@
     <facet name="groupOwner" indexKey="_groupOwner" label="groupOwners"/>
     <facet name="publishedForGroup" indexKey="_groupPublished" label="publishedForGroup"/>
 	  <facet name="isPublishedToAll" indexKey="_isPublishedToAll" label="isPublishedToAll" />
+	  <facet name="rasterType" indexKey="rasterType" label="rasterType" />
+	  <facet name="platformType" indexKey="platformType" label="platformType" />
+	  <facet name="spatialRepresentationType" indexKey="spatialRepresentationType" label="spatialRepresentationType" />
     <!--
     Example configuration for hierarchical facet based on
     the GeoNetwork region thesaurus or GEMET.
@@ -137,13 +140,11 @@
   </facets>
 
   <summaryTypes>
-    <summaryType name="csiro" format="DIMENSION">
-      <item facet="orgName" max="15"/>
-      <item facet="source" max="40"/>
-      <item facet="survey" max="40"/>
-      <item facet="project" max="15"/>
-      <item facet="gcmd" max="15"/>
-      <item facet="otherkeyword" max="15"/>
+    <summaryType name="delwp" format="DIMENSION">
+      <item facet="rasterType" max="40" translator="codelist:mcc:MD_ScopeCode"/>
+      <item facet="platformType" max="40" translator="codelist:delwp:MD_PlatformTypeCode"/>
+      <item facet="spatialRepresentationType"
+            translator="codelist:mcc:MD_SpatialRepresentationTypeCode"/>
     </summaryType>
 
     <summaryType name="details" format="DIMENSION">
@@ -240,18 +241,14 @@
       <item facet="keyword" max="100"/>
     </summaryType>
     <summaryType name="results_with_summary">
-      <item facet="orgName" max="15"/>
-      <item facet="source" max="40"/>
-      <item facet="survey" max="40"/>
-      <item facet="project" max="15"/>
-      <item facet="gcmd" max="15"/>
-      <item facet="otherkeyword" max="15"/>
-      <!--
+      <item facet="rasterType" max="40" translator="codelist:mcc:MD_ScopeCode"/>
+      <item facet="platformType" max="40" translator="codelist:delwp:MD_PlatformTypeCode"/>
+      <item facet="spatialRepresentationType"
+            translator="codelist:mcc:MD_SpatialRepresentationTypeCode"/>
       <item facet="keyword" max="15"/>
+      <!--
       <item facet="inspireTheme" sortBy="value" sortOrder="asc" max="35"/>
       <item facet="denominator" sortBy="value" sortOrder="asc" max="20"/>
-      <item facet="spatialRepresentationType"
-            translator="codelist:gmd:MD_SpatialRepresentationTypeCode"/>
       <item facet="orgName" max="15"/>
       <item facet="metadataPOC" max="15"/>
       <item facet="serviceType"/>
