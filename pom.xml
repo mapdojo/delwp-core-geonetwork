@@ -1116,6 +1116,7 @@
       <name>Geotools repository</name>
       <url>http://download.osgeo.org/webdav/geotools/</url>
     </repository>
+<!--
     <repository>
       <snapshots>
         <enabled>false</enabled>
@@ -1124,7 +1125,7 @@
       <name>CMAR OOAP Maven Repository</name>
       <url>http://blue-cis.hba.marine.csiro.au:8081/artifactory/repo</url>
     </repository>
-<!--
+-->
     <repository>
       <snapshots>
         <enabled>false</enabled>
@@ -1133,7 +1134,6 @@
       <name>Boundless repository</name>
       <url>http://repo.boundlessgeo.com/main/</url>
     </repository>
--->
     <repository>
       <snapshots>
         <enabled>false</enabled>
