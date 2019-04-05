@@ -369,7 +369,7 @@ public class GeoServerRest {
      */
     public boolean deleteDatastore(String ws, String ds) throws IOException {
         int status = sendREST(GeoServerRest.METHOD_DELETE, "/workspaces/" + ws
-            + "/datastores/" + ds, null, null, null, true);
+            + "/datastores/" + ds + "?recurse", null, null, null, true);
         return status == 200;
     }
 
@@ -385,7 +385,7 @@ public class GeoServerRest {
      */
     public boolean deleteCoverageStore(String ws, String cs) throws IOException {
         int status = sendREST(GeoServerRest.METHOD_DELETE, "/workspaces/" + ws
-            + "/coveragestores/" + cs, null, null, null, true);
+            + "/coveragestores/" + cs +"?recurse", null, null, null, true);
         return status == 200;
     }
 
