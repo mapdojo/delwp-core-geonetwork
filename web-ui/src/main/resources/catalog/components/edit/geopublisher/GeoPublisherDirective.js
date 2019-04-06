@@ -134,13 +134,19 @@
                * depending on scope.protocols options.
                */
               scope.linkService = function() {
+                var elementName = 'gmd:onLine';
+                if (gnCurrentEdit.schema.indexOf("iso19115-3") !== -1) {
+                  elementName = 'mrd:onLine';
+                }
                 var snippet =
-                    gnOnlinesrc.addFromGeoPublisher(scope.wmsLayerName,
-                    scope.resource.title,
-                    scope.gsNode, scope.protocols);
+                    gnOnlinesrc.addFromGeoPublisher(elementName, 
+                      scope.wmsLayerName,
+                      scope.resource.title,
+                      scope.gsNode, 
+                      scope.protocols);
 
                 var snippetRef = gnEditor.buildXMLFieldName(
-                    scope.refParent, 'gmd:onLine');
+                    scope.refParent, elementName);
                 var formId = '#gn-editor-' + gnCurrentEdit.id;
                 var form = $(formId);
                 if (form) {

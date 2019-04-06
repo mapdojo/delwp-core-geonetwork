@@ -641,16 +641,19 @@
          * @methodOf gn_onlinesrc.service:gnOnlinesrc
          *
          * @description
-         * The `buildOnLineResource` create an ISO19139
+         * The `buildOnLineResource` create an ISO19139 or ISO19115-3
          * XML snippet based on the url, protocol, name
          * and description provided.
          *
+         * @param {String} elementName (gmd:onLine 19139, mrd:onLine 19115-3) 
          * @param {String} url the URL
          * @param {String} protocol the URL protocol
          * @param {String} name the name
          * @param {String} description the description
          */
-        buildOnLineResource: function(url, protocol, name, description) {
+        buildOnLineResource: function(elementName, url, protocol, name, description) {
+
+          if (elementName === 'gmd:onLine') {
 
           return '<gmd:onLine xmlns:gmd="http://www.isotc211.org/2005/gmd" ' +
               '            xmlns:gco="http://www.isotc211.org/2005/gco">' +
@@ -667,7 +670,28 @@
               description +
               '    </gco:CharacterString></gmd:description>' +
               '  </gmd:CI_OnlineResource>' +
-              '</gmd:onLine>';
+              '</gmd:onLine>'; 
+
+          } else if (elementName === 'mrd:onLine') {
+
+          return '<mrd:onLine xmlns:mrd="http://standards.iso.org/iso/19115/-3/mrd/1.0" ' +
+              '            xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">' +
+              '  <cit:CI_OnlineResource xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/2.0">' +
+              '    <cit:linkage><gco:CharacterString>' + url +
+              '    </gco:CharacterString></cit:linkage>' +
+              '    <cit:protocol><gco:CharacterString>' +
+              protocol +
+              '    </gco:CharacterString></cit:protocol>' +
+              '    <cit:name><gco:CharacterString>' +
+              name +
+              '    </gco:CharacterString></cit:name>' +
+              '    <cit:description><gco:CharacterString>' +
+              description +
+              '    </gco:CharacterString></cit:description>' +
+              '  </cit:CI_OnlineResource>' +
+              '</mrd:onLine>';
+
+          }
         },
         /**
          * Specific method used by the geopublisher.
@@ -675,7 +699,7 @@
          *
          * return the XML snippet to include to the form.
          */
-        addFromGeoPublisher: function(layerName, title, node, protocols) {
+        addFromGeoPublisher: function(elementName, layerName, title, node, protocols) {
 
           var xml = '';
 
@@ -684,7 +708,7 @@
               // TODO : define default description
               var key = p + 'url';
               xml +=
-                  this.buildOnLineResource(node[key], protocols[p].label,
+                  this.buildOnLineResource(elementName, node[key], protocols[p].label,
                   layerName, title + ' (' + protocols[p].label + ')') +
                   '&&&';
             }
