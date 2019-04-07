@@ -46,6 +46,7 @@
               data-translate="">unpublish</span>
             </button>
             <!-- DROP DOWN CHECKBOX -->
+            <!-- disabled for now
             <div class="dropdown">
               <button class="btn btn-link btn-xs" data-toggle="dropdown"
                       data-ng-class="{'disabled': (!isPublished || !gsNode)}">
@@ -83,6 +84,11 @@
                 </li>
               </ul>
             </div>
+            -->
+            <button class="btn btn-link btn-xs" data-gn-click-and-spin="extractThumbnailAndExtent()"
+                    data-ng-class="{'disabled': (!isPublished || !gsNode)}">
+              <i class="fa fa-clipboard"></i>&nbsp;<span data-translate="">extractThumbnailAndExtent</span>
+            </button>
           </div>
           <button class="btn btn-link btn-xs" data-ng-click="openStyler()"
                   data-ng-class="hasStyler ? ((isPublished || !gsNode) ? '': 'disabled') : 'hidden'">

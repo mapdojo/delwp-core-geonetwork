@@ -48,13 +48,16 @@
         },
 
         publishNode: function(node, fileName,
-                              title, moreInfo) {
+                              title, moreInfo,
+                              protocol, url) {
           return $http.put('../api/mapservers/' + node +
               '/records/' + gnCurrentEdit.uuid, null, {
                 params: {
                   metadataTitle: title,
                   metadataAbstract: moreInfo,
-                  resource: fileName
+                  resource: fileName,
+                  resourceProtocol: protocol,
+                  resourceUrl: url
                 }});
         },
 
@@ -64,6 +67,18 @@
                 params: {
                   resource: fileName
                 }});
+        },
+
+        uploadThumbnail: function(blob) {
+          var config = { 
+            headers: { 'Content-Type': undefined },
+            params: { visibility: 'public' },
+          };
+
+          var formData = new FormData();
+          formData.append('file', blob);
+
+          return $http.post('../api/0.1/records/' + gnCurrentEdit.uuid + '/attachments', formData, config);
         }
       };
     }]);

@@ -130,7 +130,7 @@
 
   <!-- TODO: retrieve from settings -->
   <xsl:variable name="geopublishMatchingPattern"
-                select="'^WWW:DOWNLOAD.*|^FILE:GEO|FILE:RASTER|^DB:POSTGIS'"/>
+                select="'^WWW:DOWNLOAD.*|^FILE:GEO|FILE:RASTER|^DB:POSTGIS|^WWW:LINK.*-raster-footprint'"/>
   <xsl:variable name="layerMatchingPattern"
                 select="'^OGC:WMS.*'"/>
 </xsl:stylesheet>

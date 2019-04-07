@@ -37,12 +37,14 @@
         'gnGeoPublisher',
         'gnEditor',
         'gnCurrentEdit',
+        'gnConfigService',
         '$timeout',
         '$translate',
         '$rootScope',
+        '$http',
         function(gnMap, gnOwsContextService, gnOnlinesrc,
-            gnGeoPublisher, gnEditor, gnCurrentEdit,
-            $timeout, $translate, $rootScope) {
+            gnGeoPublisher, gnEditor, gnCurrentEdit, gnConfigService,
+            $timeout, $translate, $rootScope, $http) {
           return {
             restrict: 'A',
             replace: true,
@@ -58,6 +60,9 @@
               scope.hasStyler = false;
               scope.nodes = null;
               scope.gsNode = null;
+              scope.jsonSpec = {
+                layout: 'landscape'
+              };
               var map;
               gnGeoPublisher.getList().success(function(data) {
                 if (data != null) {
@@ -184,14 +189,14 @@
                 gnMap.addWmsFromScratch(map,
                     scope.gsNode.wmsurl, scope.layerName, false).
                     then(function(o) {
-                      if (o.layer) {
-                        gnMap.zoomLayerToExtent(o.layer, map);
-                        scope.layer = o.layer;
+                      if (o) {
+                        gnMap.zoomLayerToExtent(o, map);
+                        scope.layer = o;
                       }
                     }, function(o) {
-                      if (o.layer) {
-                        gnMap.zoomLayerToExtent(o.layer, map);
-                        scope.layer = o.layer;
+                      if (o) {
+                        gnMap.zoomLayerToExtent(o, map);
+                        scope.layer = o;
                       }
                     });
                 scope.isPublished = true;
@@ -249,7 +254,9 @@
                 return gnGeoPublisher.publishNode(scope.gsNode.id,
                     scope.name,
                     scope.resource.title,
-                    scope.resource['abstract']).success(function(data) {
+                    scope.resource['abstract'],
+                    scope.resource.protocol,
+                    scope.resource.url).success(function(data) {
                   readResponse(data, 'publish');
                 }).error(function(data) {
                   scope.statusCode = data.description;
@@ -313,6 +320,37 @@
                       .replace(/.zip$|.tif$|.tiff$|.ecw$/, '');
                 }
               };
+
+              /**
+               * Extract thumbnail from current map and publish extent to metadata
+               */
+              scope.extractThumbnailAndExtent = function() {
+                // TODO: Fix filename - 'blob' is not really indicative
+                var addThumbnailXml = function() {
+                  gnOnlinesrc.add({ 
+                             process: 'thumbnail-add',
+                             url: gnConfigService.getServiceURL() + '/api/records/' +
+                                   gnCurrentEdit.uuid + '/attachments/' + 'blob'
+                  });
+                };
+
+                map.once('postcompose', function(event) {
+                  var canvas = event.context.canvas;
+                  var blob;
+                  if (navigator.msSaveBlob) {
+                    gnGeoPublisher.uploadThumbnail(canvas.msToBlob());
+                    addThumbnailXml();
+                  } else {
+                    canvas.toBlob(function(blob) {
+                      gnGeoPublisher.uploadThumbnail(blob);
+                      addThumbnailXml();
+                    });
+                  }
+                });
+                map.renderSync();
+
+              }; 
+
             }
           };
         }]);

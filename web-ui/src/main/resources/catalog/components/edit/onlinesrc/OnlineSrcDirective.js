@@ -361,6 +361,45 @@
                     multilingualFields: ['name', 'desc']
                   },
                   'iso19115-3': {
+                    display: 'radio',
+                    types: [{
+                      label: 'addOnlinesrc',
+                      sources: {
+                        filestore: false
+                      },
+                      icon: 'fa gn-icon-onlinesrc',
+                      process: 'onlinesrc-add',
+                      fields: {
+                        'url': {isMultilingual: false},
+                        'protocol': {
+                          value: 'WWW:LINK-1.0-http--link',
+                          isMultilingual: false
+                        },
+                        'name': {},
+                        'desc': {},
+                        'function': {isMultilingual: false, hidden: true},
+                        'applicationProfile': {isMultilingual: false, hidden: true}
+                      }
+                    }, {
+                      label: 'addThumbnail',
+                      sources: {
+                        filestore: true,
+                        thumbnailMaker: true
+                      },
+                      icon: 'fa gn-icon-thumbnail',
+                      fileStoreFilter: '*.{jpg,JPG,png,PNG,gif,GIF}',
+                      process: 'thumbnail-add',
+                      fields: {
+                        'url': {
+                          param: 'url',
+                          isMultilingual: false
+                        },
+                        'name': {param: 'desc'}
+                      }
+                    }]//,
+/* Remove this ridiculously confusing online resource thingy and replace
+   with sensible radio display used for iso19139!
+                    multilingualFields: ['name', 'desc']
                     display: 'select',
                     types: [{
                       group: 'onlineDiscover',
@@ -845,6 +884,7 @@
                           isMultilingual: false}
                       }
                     }]
+*/
                   }
                 };
                 scope.config = null;

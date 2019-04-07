@@ -408,9 +408,12 @@ public class MapServersApi {
         HttpServletRequest request
     ) throws Exception {
         final MapServersUtils.ACTION action = MapServersUtils.ACTION.GET;
-        return publishResource(mapserverId, metadataUuid, resource, metadataTitle, metadataAbstract, request, action);
+        return publishResource(mapserverId, metadataUuid, resource, null, null, metadataTitle, metadataAbstract, request, action);
     }
 
+
+    public static final String API_PARAM_METADATA_RESOURCE_URL = "resourceUrl";
+    public static final String API_PARAM_METADATA_RESOURCE_PROTOCOL = "resourceProtocol";
 
     @ApiOperation(
         value = "Publish a metadata resource in a mapserver",
@@ -445,6 +448,16 @@ public class MapServersApi {
         )
         @RequestParam String resource,
         @ApiParam(
+            value = API_PARAM_METADATA_RESOURCE_URL,
+            required = true
+        )
+        @RequestParam String resourceUrl,
+        @ApiParam(
+            value = API_PARAM_METADATA_RESOURCE_PROTOCOL,
+            required = true
+        )
+        @RequestParam String resourceProtocol,
+        @ApiParam(
             value = ApiParams.API_PARAM_METADATA_TITLE
         )
         @RequestParam(
@@ -463,7 +476,7 @@ public class MapServersApi {
         HttpServletRequest request
     ) throws Exception {
         final MapServersUtils.ACTION action = MapServersUtils.ACTION.CREATE;
-        return publishResource(mapserverId, metadataUuid, resource, metadataTitle, metadataAbstract, request, action);
+        return publishResource(mapserverId, metadataUuid, resource, resourceUrl, resourceProtocol, metadataTitle, metadataAbstract, request, action);
     }
 
 
@@ -518,12 +531,14 @@ public class MapServersApi {
         HttpServletRequest request
     ) throws Exception {
         final MapServersUtils.ACTION action = MapServersUtils.ACTION.DELETE;
-        return publishResource(mapserverId, metadataUuid, resource, metadataTitle, metadataAbstract, request, action);
+        return publishResource(mapserverId, metadataUuid, resource, null, null, metadataTitle, metadataAbstract, request, action);
     }
 
 
     private String publishResource(String mapserverId, String metadataUuid,
                                    String resource,
+                                   String resourceUrl,
+                                   String resourceProtocol,
                                    String metadataTitle,
                                    String metadataAbstract,
                                    HttpServletRequest request,
@@ -576,9 +591,14 @@ public class MapServersApi {
                 "postgis", host, port, user, password, db, table, "postgis",
                 g.getNamespaceUrl(), metadataUuid, metadataTitle, metadataAbstract);
         } else {
-            if (resource.startsWith("file://") || resource.startsWith("http://")) {
+            if ((resource.startsWith("file://") || resource.startsWith("http://")) ||
+                resourceProtocol.startsWith("WWW:LINK")) {
+                String url = resource;
+                if (resourceProtocol.startsWith("WWW:LINK")) {
+                  url = resourceUrl;
+                }
                 return addExternalFile(action, gs,
-                    resource,
+                    url,
                     metadataUuid, metadataTitle, metadataAbstract);
             } else {
                 // Get ZIP file from data directory
