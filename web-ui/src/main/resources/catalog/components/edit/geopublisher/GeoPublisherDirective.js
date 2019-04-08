@@ -325,12 +325,20 @@
                * Extract thumbnail from current map and publish extent to metadata
                */
               scope.extractThumbnailAndExtent = function() {
-                // TODO: Fix filename - 'blob' is not really indicative
                 var addThumbnailXml = function() {
+                  // TODO: Fix filename - 'blob' is not really indicative
                   gnOnlinesrc.add({ 
                              process: 'thumbnail-add',
                              url: gnConfigService.getServiceURL() + '/api/records/' +
                                    gnCurrentEdit.uuid + '/attachments/' + 'blob'
+                  }).then(function() {
+                    var url = scope.gsNode['wfsurl'],
+                        layerName = scope.wmsLayerName;
+                    gnOnlinesrc.add({ 
+                             process: 'extentfromwfs-add',
+                             url: url,
+                             layerName: layerName 
+                    });
                   });
                 };
 
@@ -348,6 +356,8 @@
                   }
                 });
                 map.renderSync();
+
+                
 
               }; 
 
