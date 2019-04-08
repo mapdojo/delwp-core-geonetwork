@@ -72,7 +72,7 @@
         uploadThumbnail: function(blob) {
           var config = { 
             headers: { 'Content-Type': undefined },
-            params: { visibility: 'public' },
+            params: { visibility: 'public' }
           };
 
           var formData = new FormData();
