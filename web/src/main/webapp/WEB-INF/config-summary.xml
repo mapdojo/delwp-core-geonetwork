@@ -138,6 +138,7 @@
     <facet name="project" label="projects" indexKey="project"/>
     <facet name="gcmd" label="gcmds" indexKey="gcmd"/>
     <facet name="otherkeyword" label="otherkeywords" indexKey="otherkeyword"/>
+    <facet name="sdmCategory" label="sdmCategory" indexKey="thesaurus-SDMCategories"/>
     <facet name="mdActions" indexKey="_mdActions" label="mdActions"/>
   </facets>
 
@@ -148,6 +149,7 @@
       <item facet="spatialRepresentationType"
             translator="codelist:mcc:MD_SpatialRepresentationTypeCode"/>
       <item facet="sensorType" max="40"/>
+      <item facet="sdmCategory" max="40"/>
     </summaryType>
 
     <summaryType name="details" format="DIMENSION">
@@ -248,6 +250,7 @@
       <item facet="keyword" max="100"/>
     </summaryType>
     <summaryType name="results_with_summary">
+      <item facet="sdmCategory" max="40"/>
       <item facet="rasterType" max="40" translator="codelist:mcc:MD_ScopeCode"/>
       <item facet="platformType" max="40" translator="codelist:delwp:MD_PlatformTypeCode"/>
       <item facet="spatialRepresentationType"
