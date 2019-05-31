@@ -1183,7 +1183,10 @@ public class MetadataInsertDeleteApi {
         String uuid;
         if (metadataType == MetadataType.SUB_TEMPLATE ||
             metadataType == MetadataType.TEMPLATE_OF_SUB_TEMPLATE) {
-            uuid = UUID.randomUUID().toString();
+            uuid = xmlElement.getAttributeValue("uuid");
+            if (StringUtils.isEmpty(uuid)) {
+              uuid = UUID.randomUUID().toString();
+            }
         } else {
             uuid = appContext.getBean(IMetadataUtils.class).extractUUID(schema, xmlElement);
             if (uuid.length() == 0) {
