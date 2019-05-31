@@ -230,8 +230,9 @@
     <summaryType name="subtemplates">
       <item facet="platformType" max="40" translator="codelist:delwp:MD_PlatformTypeCode"/>
       <item facet="sensorType" max="40"/>
-      <!--
+      <item facet="orgName" max="40"/>
       <item facet="subTemplateType"/>
+      <!--
       <item facet="groupOwner" max="99" sortBy="value"
             translator="db:org.fao.geonet.repository.GroupRepository:findOne:int"/>
       <item facet="isValid" max="3" sortBy="value" translator="apploc:validStatus-"/>
