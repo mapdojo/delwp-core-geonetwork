@@ -194,7 +194,8 @@ public class MetadataEditingApi {
         ServiceContext context = ApiUtils.createServiceContext(request);
         ApplicationContext applicationContext = ApplicationContextHolder.get();
         if (starteditingsession) {
-            Integer id = Integer.valueOf(applicationContext.getBean(IMetadataUtils.class).startEditingSession(context, String.valueOf(metadata.getId()), true));
+            boolean locking = metadata.getDataInfo().getType() == MetadataType.METADATA;
+            Integer id = Integer.valueOf(applicationContext.getBean(IMetadataUtils.class).startEditingSession(context, String.valueOf(metadata.getId()), locking));
             metadata = applicationContext.getBean(IMetadataManager.class).getMetadataObject(id);
         }
 
