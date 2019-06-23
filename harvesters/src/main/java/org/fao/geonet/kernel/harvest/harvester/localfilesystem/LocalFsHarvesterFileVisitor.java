@@ -121,6 +121,11 @@ class LocalFsHarvesterFileVisitor extends SimpleFileVisitor<Path> {
         this.harvester = harvester;
         this.repo = context.getBean(MetadataRepository.class);
         this.startTime = System.currentTimeMillis();
+        this.mdManager = context.getApplicationContext().getBean(IMetadataManager.class);
+        this.mdSchemaUtils = context.getApplicationContext().getBean(IMetadataSchemaUtils.class);
+        this.mdOperations = context.getApplicationContext().getBean(IMetadataOperations.class);
+        this.mdUtils = context.getApplicationContext().getBean(IMetadataUtils.class);
+        this.mdValidator = context.getApplicationContext().getBean(IMetadataValidator.class);
         LOGGER.debug("Start visiting files at {}.", this.startTime);
     }
 
