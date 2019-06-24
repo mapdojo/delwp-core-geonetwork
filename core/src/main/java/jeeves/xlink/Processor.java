@@ -181,15 +181,20 @@ public final class Processor {
     public static synchronized Element resolveXLink(String uri, String idSearch, ServiceContext srvContext) throws IOException, JDOMException, CacheException {
 
         cleanFailures();
+        // Just refusing to resolve after MAX_FAILURES breaks links that do resolve
+        // so don't do that! A better strategy is needed...so disable breaking
+        // behaviour for now
+        /*
         if (failures.size() > MAX_FAILURES) {
             throw new RuntimeException("There have been " + failures.size() + " timeouts resolving xlinks in the last " + ELAPSE_TIME + " ms");
         }
+        */
         Element remoteFragment = null;
         try {
             // TODO-API: Support local protocol on /api/registries/
             if (uri.startsWith(XLink.LOCAL_PROTOCOL)) {
                 SpringLocalServiceInvoker springLocalServiceInvoker = srvContext.getBean(SpringLocalServiceInvoker.class);
-                remoteFragment = (Element)springLocalServiceInvoker.invoke(uri);
+                remoteFragment = (Element)springLocalServiceInvoker.invoke(uri.replaceAll("&amp;", "&"));
             } else {
                 // Avoid references to filesystem
                 if (uri.toLowerCase().startsWith("file://")) {
