@@ -321,11 +321,12 @@
     <button type="button"
             class="btn navbar-btn"
             data-ng-class="gnAddLink.$valid && !isUrlOk ? 'btn-warning' : 'btn-success'"
+            data-ng-disabled="!gnAddLink.$valid"
             data-gn-click-and-spin="addOnlinesrc()">
       <i class="fa gn-icon-onlinesrc"/>
       <i class="icon-external-link"></i>&nbsp;
       <span data-ng-show="gnAddLink.$valid && isUrlOk">
-        {{((isEditing ? 'update' : 'add') + 'Onlinesrc') | translate}}
+        {{(isEditing ? 'update' : 'add') | translate}}
       </span>
       <span data-ng-show="gnAddLink.$valid && !isUrlOk">
         {{((isEditing ? 'update' : 'add') + 'LinkAnyway') | translate}}
