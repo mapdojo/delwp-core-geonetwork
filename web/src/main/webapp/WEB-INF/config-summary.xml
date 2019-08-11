@@ -152,6 +152,8 @@
             translator="codelist:mcc:MD_SpatialRepresentationTypeCode"/>
       <item facet="sensorType" max="40"/>
       <item facet="sdmCategory" max="40"/>
+      <item facet="category" max="99" sortBy="value"
+            translator="db:org.fao.geonet.repository.MetadataCategoryRepository:findOneByName"/>
     </summaryType>
 
     <summaryType name="details" format="DIMENSION">
@@ -261,6 +263,8 @@
             translator="codelist:mcc:MD_SpatialRepresentationTypeCode"/>
       <item facet="sensorType" max="40"/>
       <item facet="keyword" max="15"/>
+      <item facet="category" max="99" sortBy="value"
+            translator="db:org.fao.geonet.repository.MetadataCategoryRepository:findOneByName"/>
       <!--
       <item facet="inspireTheme" sortBy="value" sortOrder="asc" max="35"/>
       <item facet="denominator" sortBy="value" sortOrder="asc" max="20"/>
