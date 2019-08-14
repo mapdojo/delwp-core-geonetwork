@@ -24,13 +24,14 @@
 (function() {
   goog.provide('gn_utility');
 
-
+  goog.require('gn_bounding_directive');
   goog.require('gn_utility_directive');
   goog.require('gn_utility_service');
 
   angular.module('gn_utility', [
     'gn_utility_service',
-    'gn_utility_directive'
+    'gn_utility_directive',
+    'gn_bounding_directive'
   ])
       .filter('characters', function() {
         return function(input, chars, breakOnWord) {

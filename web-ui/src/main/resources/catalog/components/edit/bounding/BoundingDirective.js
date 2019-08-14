@@ -76,6 +76,7 @@
 
             // set read only
             ctrl.readOnly = $scope.$eval($attrs['readOnly']);
+            ctrl.viewerOnly = $scope.$eval($attrs['viewerOnly']);
 
             // init map
             ctrl.map = gnMapsManager.createMap(gnMapsManager.EDITOR_MAP);
@@ -214,7 +215,11 @@
 
                 // add to map
                 source.clear();
-                source.addFeature(feature);
+                try {
+                  source.addFeature(feature);
+                } catch (e) {
+                  console.log('Add Feature failed, but will ignore...');
+                }
 
                 ctrl.updateOutput(feature, true);
               }

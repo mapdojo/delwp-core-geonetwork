@@ -6,7 +6,7 @@
 <div class="spacer" />
 
 <!-- draw tool & select boxes -->
-<div class="row">
+<div class="row" ng-if="!ctrl.viewerOnly">
   <div class="col-xs-12 col-sm-6 col-sm-push-6" ng-if="!ctrl.readOnly">
     <label class="text-muted control-label" translate>drawOnMap</label>
     <br />
@@ -57,7 +57,7 @@
 <div class="spacer" />
 
 <!-- input geometry field -->
-<div class="row">
+<div class="row" ng-if="!ctrl.viewerOnly">
   <div class="col-md-12">
     <div class="has-feedback"
       ng-class="{ 'has-success': ctrl.fromTextInput && !ctrl.parseError, 'has-error': ctrl.parseError }">
