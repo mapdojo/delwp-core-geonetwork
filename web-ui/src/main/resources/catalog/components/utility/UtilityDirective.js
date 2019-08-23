@@ -619,6 +619,8 @@
         restrict: 'A',
         link: function(scope, element, attrs) {
           element.on('click', function(e) {
+            if (e.target !== this) return; // prevent collapse if click is
+                                           // not on the collapse/uncollapse
             var legend = $(this);
             //getting the next element
             var content = attrs.first ? legend.children().slice(1) : legend.nextAll();
