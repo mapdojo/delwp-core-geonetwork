@@ -66,7 +66,7 @@
             <b>Owner: </b>
             <span>{{md.getOwnername()}}</span>
           </p>
-        	<p class="italics-text-justify" ng-if="md.draft=='Y'"><i>Working Copy</i></p>
+        	<p class="italics-text-justify" ng-if="md.hasValidation() && !md.isValid()"><i class="fa fa-times">&#160;Invalid</i></p>
         </div>
         <!--
         <blockquote ng-if="md.getContacts().resource">{{::md.getContacts().resource}}</blockquote>
