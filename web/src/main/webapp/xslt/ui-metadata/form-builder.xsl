@@ -161,6 +161,7 @@
               <xsl:call-template name="render-form-field-control-remove">
                 <xsl:with-param name="editInfo" select="$editInfo"/>
                 <xsl:with-param name="parentEditInfo" select="$parentEditInfo"/>
+                <xsl:with-param name="isRequired" select="$isRequired"/>
               </xsl:call-template>
             </xsl:if>
           </div>
@@ -281,11 +282,12 @@
               </xsl:for-each>
             </xsl:if>
           </div>
-          <div class="col-sm-1 gn-control">
+          <div class="col-sm-1 col-xs-1 gn-control">
             <xsl:if test="not($isDisabled)">
               <xsl:call-template name="render-form-field-control-remove">
                 <xsl:with-param name="editInfo" select="$editInfo"/>
                 <xsl:with-param name="parentEditInfo" select="$parentEditInfo"/>
+                <xsl:with-param name="isRequired" select="$isRequired"/>
               </xsl:call-template>
             </xsl:if>
           </div>
@@ -557,6 +559,7 @@
               <!-- For each template field create an input.
               The directive takes care of setting values. -->
               <xsl:for-each select="$template/values/key">
+               <div class="row">
                 <xsl:variable name="valueLabelKey" select="@label"/>
                 <xsl:variable name="keyRequired" select="@required"/>
                 <xsl:variable name="helper"
@@ -568,7 +571,7 @@
 
                 <!-- Only display label if more than one key to match -->
                 <xsl:if test="count($template/values/key) > 1">
-                  <label for="{$id}_{@label}">
+                  <label class="col-sm-2" for="{$id}_{@label}">
                     <!-- if key has an attr required="true"-->
                     <xsl:if test="$keyRequired">
                       <xsl:attribute name="class" select="'gn-required'"/>
@@ -579,6 +582,7 @@
 
                 <xsl:choose>
                   <xsl:when test="@use = 'textarea'">
+                   <div class="col-sm-10">
                     <textarea class="form-control"
                               data-gn-field-tooltip="{$schema}|{@tooltip}"
                               id="{$id}_{@label}">
@@ -586,8 +590,10 @@
                         <xsl:attribute name="disabled"/>
                       </xsl:if>
                     </textarea>
+                   </div>
                   </xsl:when>
                   <xsl:when test="$codelist != ''">
+                   <div class="col-sm-9">
                     <select class="form-control input-sm"
                             data-gn-field-tooltip="{$schema}|{@tooltip}"
                             id="{$id}_{@label}">
@@ -603,8 +609,10 @@
                         </option>
                       </xsl:for-each>
                     </select>
+                   </div>
                   </xsl:when>
                   <xsl:when test="@use = 'checkbox'">
+                   <div class="col-sm-10">
                     <span class="pull-left">
                       <input type="checkbox"
                              data-gn-field-tooltip="{$schema}|{@tooltip}"
@@ -615,6 +623,7 @@
                       </input>
                       &#160;
                     </span>
+                   </div>
                   </xsl:when>
                   <!-- A directive -->
                   <xsl:when test="@use = 'data-gn-language-picker'">
@@ -659,12 +668,13 @@
                     </div>
                   </xsl:when>
                   <xsl:otherwise>
-                    <xsl:variable name="keyIndex" select="position()"/>
+                   <xsl:variable name="keyIndex" select="position()"/>
+                   <div class="col-sm-10">
                     <input class="form-control"
                            type="{if (@use) then @use else 'text'}"
+                           data-gn-field-tooltip="{$schema}|{@tooltip}"
                            value="{if ($keyValues) then $keyValues/field[$keyIndex]/value/text() else ''}"
-                           id="{$id}_{@label}"
-                           data-gn-field-tooltip="{$schema}|{@tooltip}">
+                           id="{$id}_{@label}">
                       <xsl:if test="$helper">
                         <!-- hide the form field if helper is available, the
                           value is set by the directive which provide customized
@@ -675,6 +685,7 @@
                         <xsl:attribute name="disabled"/>
                       </xsl:if>
                     </input>
+                   </div>
                   </xsl:otherwise>
                 </xsl:choose>
 
@@ -690,7 +701,7 @@
                     <xsl:with-param name="tooltip" select="concat($schema, '|', @tooltip)"/>
                   </xsl:call-template>
                 </xsl:if>
-
+               </div> <!-- end row of controls -->
               </xsl:for-each>
 
               <xsl:if test="not($isExisting)">
@@ -787,7 +798,7 @@
                     select="concat($childEditInfo/@prefix, ':', $childEditInfo/@name)"/>
       <xsl:variable name="parentName"
                     select="name(ancestor::*[not(contains(name(), 'CHOICE_ELEMENT'))][1])"/>
-      <xsl:variable name="isRequired" select="$childEditInfo/@min = 1 and $childEditInfo/@max = 1"/>
+      <xsl:variable name="isRequired" select="$childEditInfo/@min = 1"/>
 
       <!-- This element is replaced by the content received when clicking add -->
       <div
@@ -1283,15 +1294,17 @@
   <xsl:template name="render-form-field-control-remove">
     <xsl:param name="editInfo"/>
     <xsl:param name="parentEditInfo" required="no"/>
+    <xsl:param name="isRequired" required="no"/>
     <xsl:if
-      test="($parentEditInfo and
+      test="(($parentEditInfo and
                      ($parentEditInfo/@del = 'true' or
                      $parentEditInfo/@min != 1)
                    ) or
                    (not($parentEditInfo) and ($editInfo and
                    ($editInfo/@del = 'true' or
                    $editInfo/@min != 1)
-                   ))">
+                   ))) and 
+                   not($isRequired and ($editInfo and $editInfo/@max and $editInfo/@max = 1) and ($parentEditInfo and $parentEditInfo/@max and $parentEditInfo/@max = 1))">
 
       <xsl:variable name="elementToRemove" select="if ($parentEditInfo) then
         $parentEditInfo else $editInfo"/>
