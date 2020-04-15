@@ -140,6 +140,7 @@
       <field name="revisionDate" tagName="revisionDate"/>
       <field name="publicationDate" tagName="publicationDate"/>
       <field name="abstract" tagName="abstract" multilingualSortField="true"/>
+      <field name="altTitle" tagName="altTitle"/>
       <field name="_defaultAbstract" tagName="defaultAbstract"/>
       <field name="keyword" tagName="keyword"/>
       <field name="keywordGroup" tagName="keywordGroup"/>
@@ -184,6 +185,7 @@
       <field name="_groupWebsite" tagName="groupWebsite"/>
       <field name="attributeTable" tagName="attributeTable"/>
       <field name="draft" tagName="draft"/>
+      <field name="databaseid" tagName="databaseid"/>
     </dumpFields>
   </search>
 
